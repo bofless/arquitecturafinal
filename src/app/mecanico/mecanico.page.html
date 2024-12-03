@@ -1,0 +1,136 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Mecánico</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="mecanico-page">
+  <!-- Selección de Camión -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Seleccionar Camión</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label>Camión</ion-label>
+        <ion-select [(ngModel)]="selectedTruck" placeholder="Selecciona un camión">
+          <ion-select-option *ngFor="let truck of trucks" [value]="truck">{{ truck.name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Historial de Modificaciones -->
+  <ion-card *ngIf="selectedTruck">
+    <ion-card-header>
+      <ion-card-title>Historial de Modificaciones</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let modification of getFilteredModifications()">
+          <ion-label>
+            <h2>{{ modification.detail }}</h2>
+            <p>Fecha: {{ modification.date }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Checklist de Mantenimiento -->
+  <ion-card *ngIf="selectedTruck">
+    <ion-card-header>
+      <ion-card-title>Checklist de Mantenimiento</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let task of maintenanceChecklist">
+          <ion-label>{{ task.task }}</ion-label>
+          <ion-checkbox slot="end" [(ngModel)]="task.completed"></ion-checkbox>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Registro de Piezas Utilizadas -->
+  <ion-card *ngIf="selectedTruck">
+    <ion-card-header>
+      <ion-card-title>Registro de Piezas Utilizadas</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-textarea
+        [(ngModel)]="partsUsed"
+        placeholder="Escribe las piezas utilizadas"
+      ></ion-textarea>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Botón para Guardar Cambios -->
+  <ion-card *ngIf="selectedTruck">
+    <ion-card-content>
+      <ion-button expand="block"(click)="updateTruckData()">Guardar Cambios</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Anuncios -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Anuncios</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let announcement of announcements">
+          <ion-label>{{ announcement }}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Reportes de Camiones -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Reportes de Camiones</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let report of truckReports">
+          <ion-label>
+            <h2>{{ report.title }}</h2>
+            <p>Fecha: {{ report.date }}</p>
+            <p>Detalles: {{ report.details }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Fechas Importantes -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Fechas Importantes</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let event of events">
+          <ion-label>
+            <h2>{{ event.title }}</h2>
+            <p>{{ event.date }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Registro de Entrada y Salida -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Registro de Horas</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button expand="block" (click)="registerEntry()">Registrar Entrada</ion-button>
+      <ion-button expand="block" (click)="registerExit()">Registrar Salida</ion-button>
+      <p *ngIf="entryTime">Última hora de entrada: {{ entryTime.toLocaleTimeString() }}</p>
+      <p *ngIf="exitTime">Última hora de salida: {{ exitTime.toLocaleTimeString() }}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

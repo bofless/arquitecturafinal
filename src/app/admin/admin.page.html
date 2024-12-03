@@ -1,0 +1,150 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Administrador</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="admin-page">
+  <!-- Alertas -->
+  <ion-alert
+    [isOpen]="isAlertOpen"
+    [header]="alertHeader"
+    [message]="alertMessage"
+    [buttons]="alertButtons"
+    (didDismiss)="setOpen(false)"
+  ></ion-alert>
+
+  <!-- Registro de Horas -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Registro de Horas</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button expand="block" (click)="registerEntry()">Registrar Entrada</ion-button>
+      <ion-button expand="block" (click)="registerExit()">Registrar Salida</ion-button>
+      <p *ngIf="entryTime">Última hora de entrada: {{ entryTime.toLocaleTimeString() }}</p>
+      <p *ngIf="exitTime">Última hora de salida: {{ exitTime.toLocaleTimeString() }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Calendario de Eventos -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Calendario de Eventos</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let event of events">
+          <ion-label>
+            <h2>{{ event.title }}</h2>
+            <p>{{ event.date }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Inbox para Inasistencias -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Avisos de Inasistencias</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-textarea [(ngModel)]="absenceMessage" placeholder="Escribe un aviso aquí"></ion-textarea>
+      <ion-button expand="block" (click)="sendAbsenceNotice()">Enviar Aviso</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Documentos Importantes -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Documentos Importantes</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let document of documents">
+          <ion-label>{{ document.name }}</ion-label>
+          <ion-button fill="outline" (click)="viewDocument(document)">Ver</ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Historial de Modificaciones de Camiones -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Historial de Modificaciones</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let modification of truckModifications">
+          <ion-label>
+            <h2>Camión: {{ modification.truck }}</h2>
+            <p>Modificación: {{ modification.detail }}</p>
+            <p>Fecha: {{ modification.date }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Historial de Pedidos -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Historial de Pedidos</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let history of orderHistory">
+          <ion-label>
+            <h2>Pedido #{{ history.id }}</h2>
+            <p>Fecha: {{ history.date }}</p>
+            <p>Estado: {{ history.status }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Crear y Ver Anuncios -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Crear Anuncios</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-textarea [(ngModel)]="announcement" placeholder="Escribe un anuncio aquí"></ion-textarea>
+      <ion-button expand="block" (click)="createAnnouncement()">Crear Anuncio</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Ver Anuncios -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Ver Anuncios</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let announcement of announcements">
+          <ion-label>{{ announcement }}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Informes de Repartidores y/o Mecánicos -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Informes de Personal</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let report of reports">
+          <ion-label>
+            <h2>{{ report.author }}</h2>
+            <p>{{ report.content }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

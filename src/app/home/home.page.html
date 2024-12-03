@@ -1,20 +1,47 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-title>Toffee</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="login-page">
+  <div class="container">
+    <ion-card class="login-card">
+      <ion-card-header>
+        <ion-card-title>Inicio de Sesión</ion-card-title>
+      </ion-card-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+      <ion-card-content>
+        <!-- Selector de Rol -->
+        <ion-item class="role-select">
+          <ion-select
+            [(ngModel)]="selectedRole"
+            placeholder="Elija su rol"
+            class="role-dropdown"
+          >
+            <ion-select-option value="mecanico">Mecánico</ion-select-option>
+            <ion-select-option value="admin">Administrador</ion-select-option>
+            <ion-select-option value="repartidor">Repartidor</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <!-- Input para Email -->
+        <ion-item class="email-input">
+          <ion-label position="floating">Email</ion-label>
+          <ion-input type="email" placeholder="Ingrese su email"></ion-input>
+        </ion-item>
+
+        <!-- Input para Contraseña -->
+        <ion-item class="password-input">
+          <ion-label position="floating">Contraseña</ion-label>
+          <ion-input type="password" placeholder="Ingrese su contraseña"></ion-input>
+        </ion-item>
+
+        <!-- Botón de Ingresar -->
+        <ion-button expand="block" class="login-button" (click)="onLogin()">
+          Ingresar
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>

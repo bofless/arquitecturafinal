@@ -1,0 +1,127 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Repartidor</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="repartidor-page">
+  <!-- Mapa -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Ruta del Pedido</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div id="map" class="map-container"></div>
+      <ion-button expand="block" (click)="loadRoute()">Cargar Ruta</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Alertas -->
+  <ion-alert
+    [isOpen]="isAlertOpen"
+    [header]="alertHeader"
+    [subHeader]="alertSubHeader"
+    [message]="alertMessage"
+    [buttons]="alertButtons"
+    (didDismiss)="setOpen(false)"
+  ></ion-alert>
+
+  <!-- Estado del Pedido -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Estado del Pedido</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let order of orders">
+          <ion-label>
+            <h2>Pedido #{{ order.id }}</h2>
+            <p>Estado: <strong>{{ order.status }}</strong></p>
+          </ion-label>
+          <ion-button
+            fill="outline"
+            slot="end"
+            (click)="confirmOrder(order.id)"
+            *ngIf="order.status === 'Pendiente'"
+          >
+            Confirmar
+          </ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Reportar Problemas de Camiones -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Reportar Problemas de Camiones</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-textarea
+        [(ngModel)]="truckReport"
+        placeholder="Escribe tu reporte aquí"
+      ></ion-textarea>
+      <ion-button expand="block" (click)="sendTruckReport()">Enviar Reporte</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Enviar Correo al Administrador -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Enviar Correo al Administrador</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-textarea
+        [(ngModel)]="adminMessage"
+        placeholder="Escribe tu mensaje aquí"
+      ></ion-textarea>
+      <ion-button expand="block" (click)="sendAdminEmail()">Enviar Correo</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Registro de Horas -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Registro de Horas</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-button expand="block" (click)="registerEntry()">Registrar Entrada</ion-button>
+      <ion-button expand="block" (click)="registerExit()">Registrar Salida</ion-button>
+      <p *ngIf="entryTime">Última hora de entrada: {{ entryTime.toLocaleTimeString() }}</p>
+      <p *ngIf="exitTime">Última hora de salida: {{ exitTime.toLocaleTimeString() }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Historial de Pedidos -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Historial de Pedidos</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let history of orderHistory">
+          <ion-label>
+            <h2>Pedido #{{ history.id }}</h2>
+            <p>Fecha: {{ history.date }}</p>
+            <p>Estado: {{ history.status }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Documentos Importantes -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Documentos Importantes</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let document of documents">
+          <ion-label>{{ document.name }}</ion-label>
+          <ion-button fill="outline" (click)="viewDocument(document)">Ver</ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

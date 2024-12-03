@@ -1,27 +1,42 @@
-#container {
-  text-align: center;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+/* Contenedor principal para el contenido */
+ion-content.login-page {
+  display: grid;
+  grid-template-rows: auto 1fr; /* Encabezado (auto) y contenido (1fr) */
+  height: 100vh;
+  background-color: #f9f9f9;
+  padding: 0;
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+/* Contenedor del contenido debajo del encabezado */
+.container {
+  display: grid;
+  place-items: center; /* Centra el contenido horizontal y verticalmente */
+  padding: 16px;
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
+/* Tarjeta de inicio de sesión */
+.login-card {
+  width: 100%;
+  max-width: 400px;       /* Tamaño máximo en pantallas grandes */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+  border-radius: 8px;     /* Bordes redondeados */
+  background: white;
 }
 
-#container a {
-  text-decoration: none;
+/* Espaciado interno */
+.login-card ion-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;              /* Espacio entre elementos */
+}
+
+/* Inputs y botón */
+.role-select,
+.email-input,
+.password-input {
+  width: 100%;
+}
+
+.login-button {
+  margin-top: 16px;
 }
